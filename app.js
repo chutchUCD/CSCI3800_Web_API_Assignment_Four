@@ -61,16 +61,16 @@ function moviesList(req, res){
                 console.log(e)
                 console.status(500).send("Internal Server Error, can't read films list.")
             } else{
-                data_list = []
-                console.log(movies)
-                console.log(typeof(movies))
-                if(!movies.length){
-                    res.json(sanitizeFilm(movies))
+                if(qrsp.first.uuid === qrsp.last.uuid){
+                    res.json(sanitizeFilm(qrsp.first))//bound to change what movies returns in the future
                 } else{
-                    movies.forEach(function(each){
+                    //make sure you use the entities off the query response (qrsp). movies just gave me a single movie
+                    /*The documentation for ver2.0 is truly paradise*/
+                    data_list = []
+                    qrsp.entities.forEach(function(each){
                         data = {}
                         data = sanitizeFilm(each)
-                        data_list.append(data)
+                        data_list.push(data)
                     })
                     res.json(data_list)
                 }
@@ -80,11 +80,11 @@ function moviesList(req, res){
     })
 }
 
-function sanitizeFilm(entity){
+function sanitizeFilm(ent){
     obj = {}
-    obj.title = entity.mtitle
-    obj.year = entity.myear
-    obj.actors = entity.mactor
+    obj.title = ent.mtitle
+    obj.year = ent.myear
+    obj.actors = ent.mactor
     return obj
 }
 
@@ -113,16 +113,18 @@ function moviesTitle(req, res){
                     if (!qrsp.first){
                         res.status(204).send("No film found")
                     }else{
+                    if(qrsp.first.uuid === qrsp.last.uuid){
+                    res.json(sanitizeFilm(qrsp.first))//bound to change what movies returns in the future
+                } else{
+                    //make sure you use the entities off the query response (qrsp). movies just gave me a single movie
+                    /*The documentation for ver2.0 is truly paradise*/
                     data_list = []
-                    if(!movies.length){
-                        res.json(sanitizeFilm(movies))
-
-                    } else{
-                        movies.forEach(function(each){
-                            data = sanitizeFilm(each)
-                            data_list.append(data)
-                        })
-                        res.json(data_list)
+                    qrsp.entities.forEach(function(each){
+                        data = {}
+                        data = sanitizeFilm(each)
+                        data_list.push(data)
+                    })
+                    res.json(data_list)
                     }}
                     
                 }
