@@ -1,0 +1,18 @@
+{
+  "name": "moviesclient",
+  "version": "1.0.0",
+  "description": "Movies client for assignment four",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cecil Hutchings",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "avault": "^0.1.17",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "sanitizer": "^0.1.3",
+    "usergrid": "^2.0.0-rc"
+  }
+}
