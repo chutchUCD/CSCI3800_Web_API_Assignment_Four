@@ -72,6 +72,7 @@ function moviesList(req, res){
                         data = sanitizeFilm(each)
                         data_list.append(data)
                     })
+                    res.json(data_list)
                 }
             }
         })
@@ -91,7 +92,7 @@ function moviesTitle(req, res){
     if (!req.query==={} || !req.query.title){
         res.status(400).send("Bad request, no recognized query. I use title=your_film")
     }else{
-        qtitle=sanitizer.sanitize(req.query.title)
+        qtitle=sanitize.sanitize(req.query.title)
         Usergrid.authenticateUser(cred, function(err, ugr, t){
         //Make sure to keep this code nearby.
         var UQuery = require('usergrid/lib/query')
@@ -121,6 +122,7 @@ function moviesTitle(req, res){
                             data = sanitizeFilm(each)
                             data_list.append(data)
                         })
+                        res.json(data_list)
                     }}
                     
                 }
